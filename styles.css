@@ -46,7 +46,12 @@ header {
     z-index: 100;
 }
 
+html {
+    overflow-x: hidden; /* Hide horizontal scollbar */
+}
+
 body {
+    width: 100vw;
     background-color: var(--background-color);
     margin: 0px;
     padding: 0px;
@@ -145,9 +150,9 @@ body {
     /* Anchor to the top left*/
     position: absolute;
     top: 0px;
-    left: -50vw;
+    left: 0vw;
 
-    width: 200vw;
+    width: 100vw;
     height: var(--header-height);
     background-color: var(--red);
     background-image: linear-gradient(to bottom, rgba(0,0,255, 0.1), rgba(0,0,0,0));
@@ -188,10 +193,10 @@ body {
 
 .color-strip {
     position: relative;
-    left: -50vw;
+    left: 0vw;
     bottom: calc(75px * 0.5);
 
-    width: 200vw;
+    width: 100vw;
     height: 75px;
     background-color: var(--teal);
     background-image: linear-gradient(to bottom, rgba(255, 153, 0, 0.1), rgba(0,0,0,0));
