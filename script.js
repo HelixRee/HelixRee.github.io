@@ -68,6 +68,7 @@ function createBannerText(displayText) {
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
   elmnt.onmousedown = dragMouseDown;
+  elmnt.ontouchstart = dragMouseDown;
 
   function dragMouseDown(e) {
     // get the mouse cursor position at startup:
