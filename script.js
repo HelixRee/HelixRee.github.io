@@ -72,9 +72,18 @@ function dragElement(elmnt) {
   elmnt.addEventListener('touchstart', dragMouseDown);
 
   function dragMouseDown(e) {
-    // get the mouse cursor position at startup:
-    pos3 = e.clientX;
-    pos4 = e.clientY;
+    if (e.clientX != null)
+    {
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+    }
+    else
+    {
+      disable_scroll();
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clienty;
+    }
     document.addEventListener('mouseup', closeDragElement);
     document.addEventListener('touchend', closeDragElement);
     // call a function whenever the cursor moves:
@@ -83,12 +92,22 @@ function dragElement(elmnt) {
   }
 
   function elementDrag(e) {
-    // calculate the new cursor position:
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    // set the element's new position:
+    if (e.clientX != null)
+      {
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+      }
+      else
+      {
+        pos1 = pos3 - e.touches[0].clientX;
+        pos2 = pos4 - e.touches[0].clientY;
+        pos3 = e.touches[0].clientX;
+        pos4 = e.touches[0].clientY;
+      }
+      
     elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
     elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
   }
@@ -98,7 +117,33 @@ function dragElement(elmnt) {
     document.removeEventListener('mouseup', closeDragElement);
     document.removeEventListener('mousemove', elementDrag);
 
+    enable_scroll();
     document.removeEventListener('touchend', closeDragElement);
     document.removeEventListener('touchmove', elementDrag);
   }
+}
+
+// PREVENT DEFAULT HANDLER
+function preventDefault(e) {
+  e = e || window.event;
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.returnValue = false;
+}
+
+// DISABLE SCROLL
+function disable_scroll() {
+
+  
+  x = window.scrollX || document.documentElement.scrollLeft;
+  y = window.scrollY || document.documentElement.scrollTop;
+  window.onscroll = function() {
+    window.scrollTo(x, y);
+  };
+
+}
+// ENABLE SCROLL
+function enable_scroll() {
+  window.onscroll = function() {};
 }
