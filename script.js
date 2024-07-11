@@ -203,3 +203,6 @@ function Lerp(value1, value2, t)
 function preventBehavior(e) {
   e.preventDefault(); 
 };
+
+var banner = document.querySelector('.banner-text');
+banner.addEventListener("touchmove", preventBehavior, {passive: false});
