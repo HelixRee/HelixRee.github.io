@@ -147,7 +147,7 @@ function EnableScroll() {
 var resetButton = document.querySelector('#banner-reset-button');
 resetButton.addEventListener('click', function() {
     document.querySelectorAll('.banner-text > div > div > div').forEach(function(div) {
-      if (!div.classList.contains('animated'))
+      if (!div.classList.contains("animated"))
         requestAnimationFrame(function() {
           var top = div.style.top;
           var left = div.style.left;
@@ -185,7 +185,7 @@ function ReturnToOrigin(element, olderTop, olderLeft)
     });
   else
     {
-      element.classList.remove('animated');
+      element.classList.remove("animated");
       element.style.left = "0px";
       element.style.top = "0px";
     }

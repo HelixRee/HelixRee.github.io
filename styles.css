@@ -398,6 +398,6 @@ header > .color-strip {
     transform: translateY(calc(50% + 4px));
 }
 
-.animated {
+/* .animated {
     background-color: blue;
-}
+} */
