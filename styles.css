@@ -363,3 +363,36 @@ header > .color-strip {
 
     /* font-size: 30px; */
 }
+
+#banner-reset-button {
+    position: absolute;
+    top: calc(75vmin - 20px);
+    right: 0px;
+
+    transform: translateY(50%);
+    height: 100px;
+    width: 20%;
+    z-index: 99;
+
+    font-family: SpAlterna;
+    font-size: 25px;
+    text-shadow: 1px 0px rgb(166, 155, 8), -2px 0px black, -4px 0px 5px black;
+
+    color: var(--white);
+    background-color: var(--light-grey);
+
+    border-radius: 50px 0% 0% 50px;
+    border: 15px solid var(--yellow);
+
+    background-image: linear-gradient(to bottom, rgba(215, 142, 255, 0.1), rgba(0, 0, 0, 0)), linear-gradient(to left, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+    box-shadow: 0px 2px black, 0px -2px black, -4px 4px 4px black;
+
+    transition: 
+    box-shadow 0.1s cubic-bezier(.68,1.35,.46,.37),
+    transform 0.1s cubic-bezier(.68,1.35,.46,.37);
+}
+
+#banner-reset-button:active {
+    box-shadow: 0px 0px black;
+    transform: translateY(calc(50% + 4px));
+}

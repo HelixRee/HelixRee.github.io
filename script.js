@@ -94,30 +94,12 @@ function DragElement(element) {
   function ElementDrag(e) {
     if (e.clientX != null)
       {
-        // let withinBoundsX = true;
-        // if (e.clientX < 20)
-        //   withinBoundsX = false;
-        // else if (e.clientX > window.innerWidth - 20)
-        //   withinBoundsX = false;
-
-        // let withinBoundsY = true;
-        // if (e.clientY < 120)
-        //   withinBoundsY = false;
-        
         // calculate the new cursor position:
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
-        // if (!withinBoundsX) { pos1 = 0;}
-        // if (!withinBoundsY) { pos2 = 0;}
-        let vMin = Math.min(window.innerHeight, window.innerWidth) * 0.01;
-        let vW = window.innerWidth * 0.01;
 
-        if (element.getBoundingClientRect().top - pos2 < (115 - (2 * vW))) pos2 = element.getBoundingClientRect().top - (115 - (2 * vW));
-        if (element.getBoundingClientRect().bottom - pos2 > (vMin * 75 + 25 + (2 * vW))) pos2 = element.getBoundingClientRect().bottom - (vMin * 75 + 25 + (2 * vW));
-        if (element.getBoundingClientRect().left - pos1 < 10) pos1 = element.getBoundingClientRect().left - 10;
-        if (element.getBoundingClientRect().right - pos1 > (window.innerWidth - 20)) pos1 = element.getBoundingClientRect().right - (window.innerWidth - 20);
       }
       else
       {
@@ -126,6 +108,13 @@ function DragElement(element) {
         pos3 = e.touches[0].clientX;
         pos4 = e.touches[0].clientY;
       }
+      let vMin = Math.min(window.innerHeight, window.innerWidth) * 0.01;
+      let vW = window.innerWidth * 0.01;
+
+      if (element.getBoundingClientRect().top - pos2 + window.scrollY < (115 - (2 * vW))) pos2 = element.getBoundingClientRect().top - (115 - (2 * vW)) + window.scrollY;
+      if (element.getBoundingClientRect().bottom - pos2 + window.scrollY > (vMin * 75 + 25 + (2 * vW))) pos2 = element.getBoundingClientRect().bottom - (vMin * 75 + 25 + (2 * vW)) + window.scrollY;
+      if (element.getBoundingClientRect().left - pos1 < 10) pos1 = element.getBoundingClientRect().left - 10;
+      if (element.getBoundingClientRect().right - pos1 > (window.innerWidth - 20)) pos1 = element.getBoundingClientRect().right - (window.innerWidth - 20);
 
     element.style.top = (element.offsetTop - pos2) + "px";
     element.style.left = (element.offsetLeft - pos1) + "px";
@@ -142,7 +131,6 @@ function DragElement(element) {
   }
 }
 
-
 // Disable Scroll
 function DisableScroll() {
   x = window.scrollX || document.documentElement.scrollLeft;
@@ -155,3 +143,53 @@ function DisableScroll() {
 function EnableScroll() {
   window.onscroll = function() {};
 }
+
+var resetButton = document.querySelector('#banner-reset-button');
+resetButton.addEventListener('click', function() {
+    document.querySelectorAll('.banner-text > div > div > div').forEach(function(div) {
+      requestAnimationFrame(function() {
+        var top = div.style.top;
+        var left = div.style.left;
+        ReturnToOrigin(div, top, left);
+      });
+    });
+})
+
+function ReturnToOrigin(element, olderTop, olderLeft)
+{
+  var spf = 1 / 30;
+  var damping = 12;
+  var bounce = 0.9;
+
+  var top = parseFloat(element.style.top);
+  if (isNaN(top)) top = 0;
+  element.style.top = Lerp(top, 0, (1 - bounce) * damping * spf) + "px";
+  element.style.top = ((1 + bounce) * parseFloat(element.style.top) - bounce * olderTop) + "px";
+
+  olderTop = top;
+
+  var left = parseFloat(element.style.left);
+  if (isNaN(left)) left = 0;
+  element.style.left = Lerp(left, 0, (1 - bounce) * damping * spf) + "px";
+  element.style.left = ((1 + bounce) * parseFloat(element.style.left) - bounce * olderLeft) + "px";
+
+  olderLeft = left;
+
+  if (Math.abs(parseFloat(element.style.top)) > 0.1 || Math.abs(parseFloat(element.style.left) > 0.1))
+    requestAnimationFrame(function() {
+      ReturnToOrigin(element, olderTop, olderLeft);
+    });
+  else
+    {
+      element.style.left = "0px";
+      element.style.top = "0px";
+    }
+    
+}
+
+function Lerp(value1, value2, t)
+{
+  var output = (value1 * (1 - t)) + (value2 * t);
+  return output;
+}
+
