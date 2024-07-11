@@ -89,6 +89,7 @@ function DragElement(element) {
     // call a function whenever the cursor moves:
     document.addEventListener('mousemove', ElementDrag);
     document.addEventListener('touchmove', ElementDrag);
+    document.addEventListener("touchmove", preventBehavior, {passive: false});
   }
 
   function ElementDrag(e) {
@@ -124,8 +125,9 @@ function DragElement(element) {
     // stop moving when mouse button is released:
     document.removeEventListener('mouseup', CloseDragElement);
     document.removeEventListener('mousemove', ElementDrag);
-
+    
     EnableScroll();
+    document.removeEventListener("touchmove", preventBehavior);
     document.removeEventListener('touchend', CloseDragElement);
     document.removeEventListener('touchmove', ElementDrag);
   }
@@ -198,3 +200,6 @@ function Lerp(value1, value2, t)
   return output;
 }
 
+function preventBehavior(e) {
+  e.preventDefault(); 
+};
