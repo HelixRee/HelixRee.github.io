@@ -1,14 +1,19 @@
 // Background grid filler
 document.addEventListener('DOMContentLoaded', function () {
-    createBoxes();
+    createLights();
+    createBannerText("Procedural Animation!");
+    document.querySelectorAll('.banner-text > div > div > div').forEach(function (div) {
+      // Make the DIV element draggable:
+      dragElement(div);
+    });
 });
 window.addEventListener('resize', function () {
-    // Redo box creation
-    removeBoxes();
-    createBoxes();
+    // Redo light creation
+    removeLights();
+    createLights();
 });
 
-function createBoxes() {
+function createLights() {
     // Get all instances of bg grid
     document.querySelectorAll('.background-grid').forEach(function(div) {
       var container = document.querySelector('.background-grid');
@@ -25,7 +30,7 @@ function createBoxes() {
     });
   }
   
-function removeBoxes() {
+function removeLights() {
     // Get all instances of bg grid
     document.querySelectorAll('.background-grid').forEach(function(div) {
         var container = document.querySelector('.background-grid');
@@ -37,4 +42,62 @@ function removeBoxes() {
             box.remove();
           });}
       });
+}
+
+function createBannerText(displayText) {
+    // Get instances of banner text container
+    document.querySelectorAll('.banner-text').forEach(function(div) {
+      for (var i = 0; i < displayText.length; i++) {
+        let char = displayText.charAt(i);
+        let charContainer = document.createElement('div');
+        div.appendChild(charContainer);
+        let charWrapper = document.createElement('div');
+        charContainer.appendChild(charWrapper)
+        let dragContainer = document.createElement('div');
+        charWrapper.appendChild(dragContainer);
+        let charBox = document.createElement('h1');
+        dragContainer.appendChild(charBox);
+        if (char == " ") char = "&nbsp";
+        charBox.innerHTML = char;
+
+      }
+    });
+}
+
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }

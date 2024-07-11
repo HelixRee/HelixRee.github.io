@@ -35,6 +35,7 @@
     font-family: BlitzMain;
     box-sizing: border-box;
     color: white;
+    user-select: none;
 }
 
 header {
@@ -301,25 +302,38 @@ header > .color-strip {
 .banner {
     display: block;
     background-color: var(--white);
-    
     width: 100vw;
-    height: 100vmin;
+    height: 75vmin;
+    margin-top: var(--header-height);
 }
 
 .banner-text {
-    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     height: 100%;
     text-align: center;
     text-shadow: 1px 1px gray;
 }
 
-.banner h1 {
+/* First div is flexed horizontally */
+/* Second div is centered vertically */
+/* Third div is positioned absolutely */
+.banner-text > div > div {
     position: relative;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
+}
 
-    margin-top: var(--header-height);
+.banner-text > div > div > div {
+    position: relative;
+}
+
+
+.banner h1 {
+    position: relative;
+
+    margin:0px;
     font-family: BlitzBold;
     font-size: 7vw;
     color: var(--grey);
