@@ -52,7 +52,7 @@ function createBannerText(displayText) {
         let charContainer = document.createElement('div');
         div.appendChild(charContainer);
         let charWrapper = document.createElement('div');
-        charContainer.appendChild(charWrapper)
+        charContainer.appendChild(charWrapper);
         let dragContainer = document.createElement('div');
         charWrapper.appendChild(dragContainer);
         let charBox = document.createElement('h1');
@@ -133,8 +133,8 @@ function DragElement(element) {
 
 // Disable Scroll
 function DisableScroll() {
-  x = window.scrollX || document.documentElement.scrollLeft;
-  y = window.scrollY || document.documentElement.scrollTop;
+  var x = window.scrollX || document.documentElement.scrollLeft;
+  var y = window.scrollY || document.documentElement.scrollTop;
   window.onscroll = function() {
     window.scrollTo(x, y);
   };
@@ -153,7 +153,7 @@ resetButton.addEventListener('click', function() {
         ReturnToOrigin(div, top, left);
       });
     });
-})
+});
 
 function ReturnToOrigin(element, olderTop, olderLeft)
 {
