@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     createBannerText("Procedural Animation!");
     document.querySelectorAll('.banner-text > div > div > div').forEach(function (div) {
       // Make the DIV element draggable:
-      dragElement(div);
+      DragElement(div);
     });
 });
 window.addEventListener('resize', function () {
@@ -65,13 +65,13 @@ function createBannerText(displayText) {
 }
 
 
-function dragElement(elmnt) {
+function DragElement(element) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
 
-  elmnt.addEventListener('mousedown', dragMouseDown);
-  elmnt.addEventListener('touchstart', dragMouseDown);
+  element.addEventListener('mousedown', DragMouseDown);
+  element.addEventListener('touchstart', DragMouseDown);
 
-  function dragMouseDown(e) {
+  function DragMouseDown(e) {
     if (e.clientX != null)
     {
       // get the mouse cursor position at startup:
@@ -80,25 +80,44 @@ function dragElement(elmnt) {
     }
     else
     {
-      disable_scroll();
+      DisableScroll();
       pos3 = e.touches[0].clientX;
       pos4 = e.touches[0].clienty;
     }
-    document.addEventListener('mouseup', closeDragElement);
-    document.addEventListener('touchend', closeDragElement);
+    document.addEventListener('mouseup', CloseDragElement);
+    document.addEventListener('touchend', CloseDragElement);
     // call a function whenever the cursor moves:
-    document.addEventListener('mousemove', elementDrag);
-    document.addEventListener('touchmove', elementDrag);
+    document.addEventListener('mousemove', ElementDrag);
+    document.addEventListener('touchmove', ElementDrag);
   }
 
-  function elementDrag(e) {
+  function ElementDrag(e) {
     if (e.clientX != null)
       {
+        // let withinBoundsX = true;
+        // if (e.clientX < 20)
+        //   withinBoundsX = false;
+        // else if (e.clientX > window.innerWidth - 20)
+        //   withinBoundsX = false;
+
+        // let withinBoundsY = true;
+        // if (e.clientY < 120)
+        //   withinBoundsY = false;
+        
         // calculate the new cursor position:
         pos1 = pos3 - e.clientX;
         pos2 = pos4 - e.clientY;
         pos3 = e.clientX;
         pos4 = e.clientY;
+        // if (!withinBoundsX) { pos1 = 0;}
+        // if (!withinBoundsY) { pos2 = 0;}
+        let vMin = Math.min(window.innerHeight, window.innerWidth) * 0.01;
+        let vW = window.innerWidth * 0.01;
+
+        if (element.getBoundingClientRect().top - pos2 < (115 - (2 * vW))) pos2 = element.getBoundingClientRect().top - (115 - (2 * vW));
+        if (element.getBoundingClientRect().bottom - pos2 > (vMin * 75 + 25 + (2 * vW))) pos2 = element.getBoundingClientRect().bottom - (vMin * 75 + 25 + (2 * vW));
+        if (element.getBoundingClientRect().left - pos1 < 10) pos1 = element.getBoundingClientRect().left - 10;
+        if (element.getBoundingClientRect().right - pos1 > (window.innerWidth - 20)) pos1 = element.getBoundingClientRect().right - (window.innerWidth - 20);
       }
       else
       {
@@ -107,43 +126,32 @@ function dragElement(elmnt) {
         pos3 = e.touches[0].clientX;
         pos4 = e.touches[0].clientY;
       }
-      
-    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+
+    element.style.top = (element.offsetTop - pos2) + "px";
+    element.style.left = (element.offsetLeft - pos1) + "px";
   }
 
-  function closeDragElement() {
+  function CloseDragElement() {
     // stop moving when mouse button is released:
-    document.removeEventListener('mouseup', closeDragElement);
-    document.removeEventListener('mousemove', elementDrag);
+    document.removeEventListener('mouseup', CloseDragElement);
+    document.removeEventListener('mousemove', ElementDrag);
 
-    enable_scroll();
-    document.removeEventListener('touchend', closeDragElement);
-    document.removeEventListener('touchmove', elementDrag);
+    EnableScroll();
+    document.removeEventListener('touchend', CloseDragElement);
+    document.removeEventListener('touchmove', ElementDrag);
   }
 }
 
-// PREVENT DEFAULT HANDLER
-function preventDefault(e) {
-  e = e || window.event;
-  if (e.preventDefault) {
-    e.preventDefault();
-  }
-  e.returnValue = false;
-}
 
-// DISABLE SCROLL
-function disable_scroll() {
-
-  
+// Disable Scroll
+function DisableScroll() {
   x = window.scrollX || document.documentElement.scrollLeft;
   y = window.scrollY || document.documentElement.scrollTop;
   window.onscroll = function() {
     window.scrollTo(x, y);
   };
-
 }
-// ENABLE SCROLL
-function enable_scroll() {
+// Enable Scroll
+function EnableScroll() {
   window.onscroll = function() {};
 }
