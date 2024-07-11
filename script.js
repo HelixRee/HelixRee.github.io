@@ -147,16 +147,20 @@ function EnableScroll() {
 var resetButton = document.querySelector('#banner-reset-button');
 resetButton.addEventListener('click', function() {
     document.querySelectorAll('.banner-text > div > div > div').forEach(function(div) {
-      requestAnimationFrame(function() {
-        var top = div.style.top;
-        var left = div.style.left;
-        ReturnToOrigin(div, top, left);
-      });
+      if (!div.classList.contains('animated'))
+        requestAnimationFrame(function() {
+          var top = div.style.top;
+          var left = div.style.left;
+          ReturnToOrigin(div, top, left);
+        });
+
+        
     });
 });
 
 function ReturnToOrigin(element, olderTop, olderLeft)
 {
+  element.classList.add("animated");
   var spf = 1 / 30;
   var damping = 12;
   var bounce = 0.9;
@@ -181,6 +185,7 @@ function ReturnToOrigin(element, olderTop, olderLeft)
     });
   else
     {
+      element.classList.remove('animated');
       element.style.left = "0px";
       element.style.top = "0px";
     }
