@@ -1,26 +1,56 @@
+var lightSize = 20;
 // Background grid filler
 document.addEventListener('DOMContentLoaded', function () {
-    createLights();
-    createBannerText("Procedural Animation!");
-    // createBannerText("Haha Penis");
-
-    document.querySelectorAll('.banner-text > div > div > div').forEach(function (div) {
-      // Make the DIV element draggable:
-      DragElement(div);
-    });
+  
+  checkLag();
+  
+  createLights();
+  createBannerText("Procedural Animation!");
+  // createBannerText("Haha Penis");
+  document.querySelectorAll('.banner-text > div > div > div').forEach(function (div) {
+    // Make the DIV element draggable:
+    DragElement(div);
+  });
 });
+
 window.addEventListener('resize', function () {
     // Redo light creation
     removeLights();
     createLights();
+
+    // checkLag();
+
 });
+
+function checkLag() {
+  var time = performance.now();
+  requestAnimationFrame(function() {
+    var newTime = performance.now();
+    elapsedTime = (newTime - time) / 1000;
+  
+    console.log(1/elapsedTime);
+  
+    if ((1 / elapsedTime) < 30)
+      resizeLights(40);
+    else
+      resizeLights(20);
+  });
+}
+
+function resizeLights(newLightSize) {
+  removeLights();
+  lightSize = newLightSize;
+  document.querySelector('.background-grid').style.gridTemplateColumns = "repeat(auto-fill, " + lightSize + "px)";
+  document.querySelector('.background-grid').style.gridTemplateRows = "repeat(auto-fill, " + lightSize + "px)";
+  createLights();
+} 
 
 function createLights() {
     // Get all instances of bg grid
     document.querySelectorAll('.background-grid').forEach(function(div) {
       var container = document.querySelector('.background-grid');
-      var containerWidth = Math.floor(container.offsetWidth / 20),
-          containerHeight = Math.ceil(container.offsetHeight / 20);
+      var containerWidth = Math.floor(container.offsetWidth / lightSize),
+          containerHeight = Math.ceil(container.offsetHeight / lightSize);
       var squareAmount = containerWidth * containerHeight;
       for (var i = 0; i < squareAmount; i++) {
         let box = document.createElement('div');
@@ -36,8 +66,8 @@ function removeLights() {
     // Get all instances of bg grid
     document.querySelectorAll('.background-grid').forEach(function(div) {
         var container = document.querySelector('.background-grid');
-        var containerWidth = Math.floor(container.offsetWidth / 20),
-            containerHeight = Math.ceil(container.offsetHeight / 20);
+        var containerWidth = Math.floor(container.offsetWidth / lightSize),
+            containerHeight = Math.ceil(container.offsetHeight / lightSize);
         var squareAmount = containerWidth * containerHeight;
         for (var i = 0; i < squareAmount; i++) {
           div.querySelectorAll('div').forEach(function(box) {
@@ -155,37 +185,41 @@ resetButton.addEventListener('click', function() {
         requestAnimationFrame(function() {
           var top = div.style.top;
           var left = div.style.left;
-          ReturnToOrigin(div, top, left);
+          var time = performance.now();
+          ReturnToOrigin(div, top, left, time);
         });
 
         
     });
 });
 
-function ReturnToOrigin(element, olderTop, olderLeft)
+function ReturnToOrigin(element, olderTop, olderLeft, startTime)
 {
+  time = performance.now()
+  elapsedTime = (time - startTime) / 1000;
+  // console.log(elapsedTime);
   element.classList.add("animated");
-  var spf = 1 / 30;
+  // var spf = 1 / 30;
   var damping = 12;
   var bounce = 0.9;
 
   var top = parseFloat(element.style.top);
   if (isNaN(top)) top = 0;
-  element.style.top = Lerp(top, 0, (1 - bounce) * damping * spf) + "px";
+  element.style.top = Lerp(top, 0, (1 - bounce) * damping * elapsedTime) + "px";
   element.style.top = ((1 + bounce) * parseFloat(element.style.top) - bounce * olderTop) + "px";
 
   olderTop = top;
 
   var left = parseFloat(element.style.left);
   if (isNaN(left)) left = 0;
-  element.style.left = Lerp(left, 0, (1 - bounce) * damping * spf) + "px";
+  element.style.left = Lerp(left, 0, (1 - bounce) * damping * elapsedTime) + "px";
   element.style.left = ((1 + bounce) * parseFloat(element.style.left) - bounce * olderLeft) + "px";
 
   olderLeft = left;
 
   if (Math.abs(parseFloat(element.style.top)) > 0.1 || Math.abs(parseFloat(element.style.left) > 0.1))
     requestAnimationFrame(function() {
-      ReturnToOrigin(element, olderTop, olderLeft);
+      ReturnToOrigin(element, olderTop, olderLeft, time);
     });
   else
     {
