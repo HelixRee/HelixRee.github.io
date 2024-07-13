@@ -348,31 +348,31 @@ header > .color-strip {
     font-size: 7vw;
     color: white;
     text-shadow: 
-    4px 4px black, -2px -2px black,
-    3px -3px black, -3px 3px black,
+    0.33vw 0.33vw black, -0.16vw -0.16vw black,
+    0.25vw -0.25vw black, -0.25vw 0.25vw black,
 
-    -2px 5px var(--purple), -1px 6px var(--purple),
-    0px 7px var(--purple), 1px 8px var(--purple),
-    5px -2px var(--purple), 6px -1px var(--purple),
-    7px 0px var(--purple), 8px 1px var(--purple),
+    -0.16vw 0.42vw var(--purple), -0.08vw 0.5vw var(--purple),
+    0vw 0.58vw var(--purple), 0.08vw 0.67vw var(--purple),
+    0.42vw -0.16vw var(--purple), 0.5vw -0.08vw var(--purple),
+    0.58vw 0vw var(--purple), 0.67vw 0.08vw var(--purple),
 
-    2px 8px var(--purple), 8px 2px var(--purple), 
-    3px 8px var(--purple), 8px 3px var(--purple),
-    4px 8px var(--purple), 8px 4px var(--purple), 
-    5px 8px var(--purple), 8px 5px var(--purple), 
-    6px 8px var(--purple), 8px 6px var(--purple), 
-    7px 8px var(--purple), 8px 7px var(--purple),  
+    0.16vw 0.67vw var(--purple), 0.67vw 0.16vw var(--purple), 
+    0.25vw 0.67vw var(--purple), 0.67vw 0.25vw var(--purple),
+    0.33vw 0.67vw var(--purple), 0.67vw 0.33vw var(--purple), 
+    0.42vw 0.67vw var(--purple), 0.67vw 0.42vw var(--purple), 
+    0.5vw 0.67vw var(--purple), 0.67vw 0.5vw var(--purple), 
+    0.58vw 0.67vw var(--purple), 0.67vw 0.58vw var(--purple),  
 
-    8px 8px var(--purple), 
+    0.67vw 0.67vw var(--purple), 
     
-    3px 9px var(--lime), 5px 10px var(--lime),
-    7px 11px var(--lime), 9px 12px var(--lime),
-    9px 3px var(--lime), 10px 5px var(--lime),
-    11px 7px var(--lime), 12px 9px var(--lime),
+    0.25vw 0.75vw var(--lime), 0.42vw 0.83vw var(--lime),
+    0.58vw 0.92vw var(--lime), 0.75vw 1.16vw var(--lime),
+    0.75vw 0.25vw var(--lime), 0.83vw 0.42vw var(--lime),
+    0.92vw 0.58vw var(--lime), 1vw 0.75vw var(--lime),
 
-    11px 12px var(--lime), 12px 11px var(--lime), 
+    0.92vw 1vw var(--lime), 1vw 0.92vw var(--lime), 
     
-    12px 12px var(--lime);
+    1vw 1vw var(--lime);
 
 }
 
