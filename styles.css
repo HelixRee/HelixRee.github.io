@@ -356,12 +356,21 @@ header > .color-strip {
     5px -2px var(--purple), 6px -1px var(--purple),
     7px 0px var(--purple), 8px 1px var(--purple),
 
+    2px 8px var(--purple), 8px 2px var(--purple), 
+    3px 8px var(--purple), 8px 3px var(--purple),
+    4px 8px var(--purple), 8px 4px var(--purple), 
+    5px 8px var(--purple), 8px 5px var(--purple), 
+    6px 8px var(--purple), 8px 6px var(--purple), 
+    7px 8px var(--purple), 8px 7px var(--purple),  
+
     8px 8px var(--purple), 
     
     3px 9px var(--lime), 5px 10px var(--lime),
     7px 11px var(--lime), 9px 12px var(--lime),
     9px 3px var(--lime), 10px 5px var(--lime),
     11px 7px var(--lime), 12px 9px var(--lime),
+
+    11px 12px var(--lime), 12px 11px var(--lime), 
     
     12px 12px var(--lime);
 
