@@ -195,7 +195,7 @@ resetButton.addEventListener('click', function() {
 
 function ReturnToOrigin(element, olderTop, olderLeft, startTime)
 {
-  time = performance.now()
+  var time = performance.now()
   elapsedTime = (time - startTime) / 1000;
   // console.log(elapsedTime);
   element.classList.add("animated");
