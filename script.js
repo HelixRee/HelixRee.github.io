@@ -2,6 +2,8 @@
 document.addEventListener('DOMContentLoaded', function () {
     createLights();
     createBannerText("Procedural Animation!");
+    // createBannerText("Haha Penis");
+
     document.querySelectorAll('.banner-text > div > div > div').forEach(function (div) {
       // Make the DIV element draggable:
       DragElement(div);
@@ -133,7 +135,7 @@ function DragElement(element) {
   }
 }
 
-// Disable Scroll
+// Disable Scroll (Pls Remove)
 function DisableScroll() {
   var x = window.scrollX || document.documentElement.scrollLeft;
   var y = window.scrollY || document.documentElement.scrollTop;

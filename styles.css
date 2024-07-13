@@ -14,6 +14,8 @@
     --grey: #353432;
     --light-grey: #3d3938;
     --white: #E4DFDA;
+    --pearl: #f2f2ec;
+    --magenta: #b23073;
 }
 
 @font-face {
@@ -225,7 +227,8 @@ body {
     color: var(--cyan);
 
     z-index: 99;
-    text-shadow: 1px 0px turquoise;
+    text-shadow: 
+    4px 0px rgb(58, 158, 148);
 
     animation: sway 60s ease-in-out -30s infinite alternate;
 
@@ -305,6 +308,9 @@ header > .color-strip {
     width: 100vw;
     height: 75vmin;
     margin-top: var(--header-height);
+
+    background-image: url(Images/Background.jpg);
+    background-size: 100% 100%;
 }
 
 .banner-text {
@@ -331,6 +337,7 @@ header > .color-strip {
 }
 
 
+
 .banner h1 {
     position: relative;
 
@@ -339,7 +346,25 @@ header > .color-strip {
     margin:0px;
     font-family: BlitzBold;
     font-size: 7vw;
-    color: var(--grey);
+    color: white;
+    text-shadow: 
+    4px 4px black, -2px -2px black,
+    3px -3px black, -3px 3px black,
+
+    -2px 5px var(--purple), -1px 6px var(--purple),
+    0px 7px var(--purple), 1px 8px var(--purple),
+    5px -2px var(--purple), 6px -1px var(--purple),
+    7px 0px var(--purple), 8px 1px var(--purple),
+
+    8px 8px var(--purple), 
+    
+    3px 9px var(--lime), 5px 10px var(--lime),
+    7px 11px var(--lime), 9px 12px var(--lime),
+    9px 3px var(--lime), 10px 5px var(--lime),
+    11px 7px var(--lime), 12px 9px var(--lime),
+    
+    12px 12px var(--lime);
+
 }
 
 .banner > .color-strip {
@@ -363,6 +388,7 @@ header > .color-strip {
 
     /* font-size: 30px; */
 }
+
 
 #banner-reset-button {
     position: absolute;
@@ -398,6 +424,47 @@ header > .color-strip {
     transform: translateY(calc(50% + 4px));
 }
 
-/* .animated {
-    background-color: blue;
-} */
+#content-top-strip  {
+    top: calc(75vmin + 50px);
+    background-color: var(--pearl);
+    transform: translateY(50%);
+
+    /* background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)); */
+    background-image: none;
+    box-shadow: none;
+    border: none;
+
+    z-index: 97;    
+}
+
+#content-top-strip > p  {
+    animation: sway 60s ease-in-out -45s infinite alternate;
+    color: var(--magenta);  
+    text-shadow: 
+    -4px 0px 4px blackz; 
+    font-size: 400px;
+}
+
+#content-top-strip-overlay  {
+    top: calc(75vmin + 50px);
+    background-color: rgba(0, 0, 0, 0);
+    transform: translateY(50%);
+    background-image: linear-gradient(to top, rgba(238, 255, 0, 0.1), rgba(0, 0, 0, 0));
+
+    
+    box-shadow: none;
+    border: none;
+    
+    z-index: 97;    
+}
+
+#content-top-strip-overlay > p {
+    background-image: linear-gradient(to bottom, rgba(238, 255, 0, 0.1), rgba(0, 0, 0, 0));
+    animation: sway 60s ease-in-out -45s infinite alternate;
+    color: var(--magenta);  
+    text-shadow: 
+    1px 1px var(--background-color), -1px -1px var(--background-color), 1px -1px var(--background-color), -1px 1px var(--background-color),
+    4px 0px var(--white), -4px 0px var(--white), 0px -4px var(--white), 0px 4px var(--white);
+    
+    font-size: 60px;
+}
