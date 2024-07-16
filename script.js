@@ -26,9 +26,9 @@ function checkLag() {
   var time = performance.now();
   requestAnimationFrame(function() {
     var newTime = performance.now();
-    elapsedTime = (newTime - time) / 1000;
+    var elapsedTime = (newTime - time) / 1000;
   
-    console.log(1/elapsedTime);
+    // console.log(1/elapsedTime);
   
     if ((1 / elapsedTime) < 30)
       resizeLights(40);
@@ -195,8 +195,8 @@ resetButton.addEventListener('click', function() {
 
 function ReturnToOrigin(element, olderTop, olderLeft, startTime)
 {
-  var time = performance.now()
-  elapsedTime = (time - startTime) / 1000;
+  var time = performance.now();
+  var elapsedTime = (time - startTime) / 1000;
   // console.log(elapsedTime);
   element.classList.add("animated");
   // var spf = 1 / 30;
@@ -238,7 +238,118 @@ function Lerp(value1, value2, t)
 
 function preventBehavior(e) {
   e.preventDefault(); 
-};
+}
 
 var banner = document.querySelector('.banner-text');
 banner.addEventListener("touchmove", preventBehavior, {passive: false});
+
+var currentPage = 1;
+// var contentNavbar = document.querySelector(".content-navbar");
+var timeOfPageSwap = 0;
+displayPage();
+
+function switchPage() 
+{
+  resetPages();
+  showPage();
+  
+  hidePages();
+  displayPage();
+}
+
+function resetPages() {
+  document.querySelectorAll(".page-icon").forEach(function(div) {
+    div.style.flexGrow = 0;
+  });
+}
+
+function showPage() {
+  var pageID = "#page" + currentPage;
+  var selectedPage = document.querySelector(pageID);
+  selectedPage.style.flexGrow = 1;
+}
+
+
+function nextPage() {
+  var currentTime = performance.now();
+  var timeSinceLastSwap = currentTime - timeOfPageSwap;
+  timeOfPageSwap = currentTime;
+  if (timeSinceLastSwap < 50) 
+    return;
+
+  currentPage = currentPage % 3 + 1;
+  console.log(currentPage);
+  console.log("Next page");
+  switchPage();
+}
+
+function prevPage() {
+  var currentTime = performance.now();
+  var timeSinceLastSwap = currentTime - timeOfPageSwap;
+  timeOfPageSwap = currentTime;
+  if (timeSinceLastSwap < 50) 
+    return;
+
+  currentPage = currentPage - 1;
+  if (currentPage == 0)
+    currentPage = 3;
+  console.log(currentPage);
+  console.log("Prev page");
+  switchPage();
+}
+
+var contentNavbar = document.querySelector(".content-navbar");
+var nextPageBtn = document.querySelector("#nxt-page-btn");
+nextPageBtn.addEventListener("click", nextPage);
+// nextPageBtn.addEventListener("click", function() {
+//   if (!contentNavbar.classList.contains("animated"))
+//   {
+//     contentNavbar.classList.add("animated");
+//     requestAnimationFrame(function () {
+//       contentNavbar.classList.remove("animated");
+//       nextPage();
+//     })
+//   }
+// });
+
+var prevPageBtn = document.querySelector("#prev-page-btn");
+// prevPageBtn.addEventListener("click", function() {
+//   if (!contentNavbar.classList.contains("animated"))
+//   {
+//     contentNavbar.classList.add("animated");
+//     requestAnimationFrame(function() {
+//       contentNavbar.classList.remove("animated");
+//       prevPage();
+//     })
+//   }
+// });
+prevPageBtn.addEventListener("click", prevPage);
+
+var page1Btn = document.querySelector("#page1");
+page1Btn.addEventListener("click", function() {
+  currentPage = 1;
+  switchPage();
+});
+
+var page2Btn = document.querySelector("#page2");
+page2Btn.addEventListener("click", function() {
+  currentPage = 2;
+  switchPage();
+});
+
+var page3Btn = document.querySelector("#page3");
+page3Btn.addEventListener("click", function() {
+  currentPage = 3;
+  switchPage();
+});
+
+function hidePages() {
+  document.querySelectorAll('.page-content').forEach(function(div) {
+    div.classList.remove('active-page');
+  });
+}
+
+function displayPage() {
+  var element = document.querySelector('#page' + currentPage + '-content');
+  element.classList.add('active-page');
+}
