@@ -431,8 +431,7 @@ function GenericDragElement(element) {
 
     var width = Math.min(window.innerWidth - 20, 800);
     var height = width * 3 / 4;
-    // console.log(width);
-    // console.log(element.offsetTop);
+
     element.style.top = Math.max(element.offsetTop, 0) + "px";
     element.style.top = Math.min(element.offsetTop, height - 110) + "px";
     element.style.left = Math.max(element.offsetLeft, 0) + "px";
@@ -540,10 +539,7 @@ function HandleSecondOrderForm(event) {
   let newDamping = document.querySelector('#second-order-form #damping');
   let newBounce = document.querySelector('#second-order-form #bounce');
   
-  // console.log(newDamping.value);
-  // console.log(damping);
   damping = newDamping.value;
   bounce = parseFloat(newBounce.value);
-  // console.log(damping);
 }
 secondOrderForm.addEventListener('submit', HandleSecondOrderForm);

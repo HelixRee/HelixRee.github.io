@@ -338,7 +338,6 @@ header > .color-strip {
 
 .banner-text > div > div > div {
     position: relative;
-    /* background-color: blue; */
 }
 
 
@@ -346,7 +345,6 @@ header > .color-strip {
 .banner h1 {
     position: relative;
 
-    /* height: 14vw; */
     padding: 0px;
     margin:0px;
     font-family: BlitzBold;
@@ -399,8 +397,6 @@ header > .color-strip {
     color: var(--yellow);
     text-shadow: 1px 0px rgb(166, 155, 8), -2px 0px black, -4px 0px 5px black;
     animation: sway 60s ease-in-out -15s infinite alternate;
-
-    /* font-size: 30px; */
 }
 
 
@@ -440,13 +436,11 @@ header > .color-strip {
 
 #content-top-strip  {
     position: static;
-    /* top: calc(75vmin + 50px); */
     top: auto;
     bottom: auto;
     background-color: var(--pearl);
     transform: translateY(0%);
 
-    /* background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0)); */
     background-image: none;
     box-shadow: 0px 0.5vmin 0.5vmin black;
     border: none;
@@ -469,7 +463,6 @@ header > .color-strip {
     transform: translateY(0%);
     background-image: linear-gradient(to top, rgba(238, 255, 0, 0.1), rgba(0, 0, 0, 0));
 
-    
     box-shadow: none;
     border: none;
     
@@ -502,8 +495,6 @@ header > .color-strip {
     grid-template-columns: 75px 1fr 75px;
 
     border: 2px outset white;
-    /* box-shadow: 4px 4px black; */
-    /* display: flex; */
     text-align: center;
 
     place-content: center;
@@ -592,11 +583,9 @@ header > .color-strip {
     position: absolute;
     left: 50%;
     top: 0;
-    /* transform: translateX(-50%); */
     transform: translate(-50%, -100%);
     z-index: -10;
     display: block;
-    /* margin: 10px; */
     margin-top: 0px;
     padding-top: 20px;
     padding-bottom: 50px;
@@ -610,9 +599,6 @@ header > .color-strip {
     border: 4px outset black;
 
     text-align: center;
-    /* border: 4px inset white; */
-    /* transform: scale(1,0); */
-    /* transform-origin: 50% 0%; */
     transition: transform 1s;
 }
 
@@ -621,8 +607,6 @@ header > .color-strip {
 
     margin: 10px;
     font-size: 18px;
-    /* text-align: left; */
-
 }
 
 .page-content > h1 {
@@ -637,23 +621,16 @@ header > .color-strip {
 }
 
 .page-content img {
-    /* height: calc(100% - 20px);
-    width: calc(100% - 20px); */
     width: calc(100% - 20px);
     max-width: 800px;
     height: auto;
     margin: 10px;
     object-fit: contain;
-    /* max-width: 800px; */
 
     border-radius: 10px;
     border: 4px white inset;
     
 }
-
-/* .page-content a {
-    float: right;
-} */
 
 .page-content .underline-overlay {
     position: absolute;
@@ -663,8 +640,7 @@ header > .color-strip {
     position: relative;
     display: block;
     transform: translate(-50%, 0%);
-    /* transform: none; */
-    
+
     z-index: -5;
 }
 
@@ -740,7 +716,6 @@ header > .color-strip {
     max-width: 800px;
     aspect-ratio: 4 / 3;
     height: auto;
-    /* margin: 10px; */
     border-radius: 10px;
     border: 4px rgb(203, 203, 203) inset;
     background-color: var(--background-color);
@@ -752,7 +727,6 @@ header > .color-strip {
     background-color: rgba(203, 203, 203, 0.75);
     border: 4px var(--background-color) outset;
     border-radius: 50%;
-    /* Attempted fix */
     z-index: 10;
 }
 .page-content .draggable p {
