@@ -776,14 +776,16 @@ header > .color-strip {
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
+    max-width: 800px;
     background-color: var(--grey);
     padding-bottom: 10px;
     border: 4px rgb(203, 203, 203) outset;
-    border-radius: 0px 0px 100% 100%;
+    border-radius: 0px 0px 20px 20px;
   }
 
   .input-field {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    padding-bottom: 5px;
   }
 
