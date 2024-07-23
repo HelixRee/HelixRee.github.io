@@ -1,4 +1,6 @@
 var lightSize = 20;
+var damping = 12;
+var bounce = 0.9;
 // Background grid filler
 document.addEventListener('DOMContentLoaded', function () {
   
@@ -11,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Make the DIV element draggable:
     DragElement(div);
   });
+
+  document.querySelector('.nav-icon input').checked = false;
+
 });
 
 window.addEventListener('resize', function () {
@@ -200,8 +205,7 @@ function ReturnToOrigin(element, olderTop, olderLeft, startTime)
   // console.log(elapsedTime);
   element.classList.add("animated");
   // var spf = 1 / 30;
-  var damping = 12;
-  var bounce = 0.9;
+
 
   var top = parseFloat(element.style.top);
   if (isNaN(top)) top = 0;
@@ -277,9 +281,9 @@ function nextPage() {
   if (timeSinceLastSwap < 50) 
     return;
 
-  currentPage = currentPage % 3 + 1;
-  console.log(currentPage);
-  console.log("Next page");
+  currentPage = currentPage % 4 + 1;
+  // console.log(currentPage);
+  // console.log("Next page");
   switchPage();
 }
 
@@ -292,55 +296,65 @@ function prevPage() {
 
   currentPage = currentPage - 1;
   if (currentPage == 0)
-    currentPage = 3;
-  console.log(currentPage);
-  console.log("Prev page");
+    currentPage = 4;
+  // console.log(currentPage);
+  // console.log("Prev page");
   switchPage();
 }
 
-var contentNavbar = document.querySelector(".content-navbar");
+// var contentNavbar = document.querySelector(".content-navbar");
 var nextPageBtn = document.querySelector("#nxt-page-btn");
 nextPageBtn.addEventListener("click", nextPage);
-// nextPageBtn.addEventListener("click", function() {
-//   if (!contentNavbar.classList.contains("animated"))
-//   {
-//     contentNavbar.classList.add("animated");
-//     requestAnimationFrame(function () {
-//       contentNavbar.classList.remove("animated");
-//       nextPage();
-//     })
-//   }
-// });
 
 var prevPageBtn = document.querySelector("#prev-page-btn");
-// prevPageBtn.addEventListener("click", function() {
-//   if (!contentNavbar.classList.contains("animated"))
-//   {
-//     contentNavbar.classList.add("animated");
-//     requestAnimationFrame(function() {
-//       contentNavbar.classList.remove("animated");
-//       prevPage();
-//     })
-//   }
-// });
 prevPageBtn.addEventListener("click", prevPage);
 
-var page1Btn = document.querySelector("#page1");
-page1Btn.addEventListener("click", function() {
+document.querySelectorAll(".page1").forEach(function(div) {
+  div.addEventListener("click", function() {
   currentPage = 1;
   switchPage();
+  document.querySelector('.nav-icon input').checked = false;
+  var splat = document.querySelector('.nav-corner-splat');
+  splat.classList.remove("expanded");
+  var options = document.querySelector('.nav-options');
+  options.classList.remove("shown");
+});
 });
 
-var page2Btn = document.querySelector("#page2");
-page2Btn.addEventListener("click", function() {
+document.querySelectorAll(".page2").forEach(function(div) {
+  div.addEventListener("click", function() {
   currentPage = 2;
   switchPage();
+  document.querySelector('.nav-icon input').checked = false;
+  var splat = document.querySelector('.nav-corner-splat');
+  splat.classList.remove("expanded");
+  var options = document.querySelector('.nav-options');
+  options.classList.remove("shown");
+});
 });
 
-var page3Btn = document.querySelector("#page3");
-page3Btn.addEventListener("click", function() {
+document.querySelectorAll(".page3").forEach(function(div) {
+  div.addEventListener("click", function() {
   currentPage = 3;
   switchPage();
+  document.querySelector('.nav-icon input').checked = false;
+  var splat = document.querySelector('.nav-corner-splat');
+  splat.classList.remove("expanded");
+  var options = document.querySelector('.nav-options');
+  options.classList.remove("shown");
+});
+});
+
+document.querySelectorAll(".page4").forEach(function(div) {
+  div.addEventListener("click", function() {
+  currentPage = 4;
+  switchPage();
+  document.querySelector('.nav-icon input').checked = false;
+  var splat = document.querySelector('.nav-corner-splat');
+  splat.classList.remove("expanded");
+  var options = document.querySelector('.nav-options');
+  options.classList.remove("shown");
+});
 });
 
 function hidePages() {
@@ -353,3 +367,183 @@ function displayPage() {
   var element = document.querySelector('#page' + currentPage + '-content');
   element.classList.add('active-page');
 }
+
+document.querySelector('.nav-icon').addEventListener("click", function() {
+  var splat = document.querySelector('.nav-corner-splat');
+  splat.classList.toggle("expanded");
+  var options = document.querySelector('.nav-options');
+  options.classList.toggle("shown");
+});
+
+document.querySelectorAll('.draggable').forEach(function(div) {
+  GenericDragElement(div);
+});
+
+function GenericDragElement(element) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+  element.addEventListener('mousedown', DragMouseDown);
+  element.addEventListener('touchstart', DragMouseDown);
+
+  function DragMouseDown(e) {
+    if (e.clientX != null)
+    {
+      // get the mouse cursor position at startup:
+      pos3 = e.clientX;
+      pos4 = e.clientY;
+    }
+    else
+    {
+      DisableScroll();
+      pos3 = e.touches[0].clientX;
+      pos4 = e.touches[0].clienty;
+    }
+    document.addEventListener('mouseup', CloseDragElement);
+    document.addEventListener('touchend', CloseDragElement);
+    // call a function whenever the cursor moves:
+    document.addEventListener('mousemove', ElementDrag);
+    document.addEventListener('touchmove', ElementDrag);
+    document.addEventListener("touchmove", preventBehavior, {passive: false});
+  }
+
+  function ElementDrag(e) {
+    if (e.clientX != null)
+      {
+        // calculate the new cursor position:
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+
+      }
+      else
+      {
+        pos1 = pos3 - e.touches[0].clientX;
+        pos2 = pos4 - e.touches[0].clientY;
+        pos3 = e.touches[0].clientX;
+        pos4 = e.touches[0].clientY;
+      }
+
+      // stupid boundingbox code
+
+    element.style.top = (element.offsetTop - pos2) + "px";
+    element.style.left = (element.offsetLeft - pos1) + "px";
+
+    var width = Math.min(window.innerWidth - 20, 800);
+    var height = width * 3 / 4;
+    // console.log(width);
+    // console.log(element.offsetTop);
+    element.style.top = Math.max(element.offsetTop, 0) + "px";
+    element.style.top = Math.min(element.offsetTop, height - 110) + "px";
+    element.style.left = Math.max(element.offsetLeft, 0) + "px";
+    element.style.left = Math.min(element.offsetLeft, width - 110) + "px";
+  }
+
+  function CloseDragElement() {
+    // stop moving when mouse button is released:
+    document.removeEventListener('mouseup', CloseDragElement);
+    document.removeEventListener('mousemove', ElementDrag);
+    
+    EnableScroll();
+    document.removeEventListener("touchmove", preventBehavior);
+    document.removeEventListener('touchend', CloseDragElement);
+    document.removeEventListener('touchmove', ElementDrag);
+    // FirstOrderSeeker(firstOrderSeeker, firstOrderTarget);
+  }
+}
+
+var firstOrderSeeker = document.querySelector('.seeker.first-order');
+var firstOrderTarget = document.querySelector('.draggable.first-order');
+FirstOrderSeeker(firstOrderSeeker, firstOrderTarget);
+function FirstOrderSeeker(seeker, target) {
+  var startTime = performance.now();
+  requestAnimationFrame(function() {
+    FirstOrderDynamic(seeker, target, startTime);
+  });
+}
+
+function FirstOrderDynamic(seeker, target, startTime) {
+  // if (Math.abs(seeker.offsetTop - target.offsetTop) < 0.1 && Math.abs(seeker.offsetLeft - target.offsetLeft) < 0.1 )
+  //   return;
+
+  let elapsedTime = performance.now() - startTime;
+  seeker.style.top = Lerp(seeker.offsetTop, target.offsetTop, damping * (elapsedTime / 1000)) + "px";
+  seeker.style.left = Lerp(seeker.offsetLeft, target.offsetLeft, damping * (elapsedTime / 1000)) + "px";
+  startTime = performance.now();
+  requestAnimationFrame(function() {
+    FirstOrderDynamic(seeker, target, startTime);
+  });
+}
+
+// Prevent form from refreshing page
+var firstOrderForm = document.querySelector("#first-order-form");
+
+function HandleFirstOrderForm(event) { 
+  event.preventDefault();
+  
+  let newDamping = document.querySelector('#first-order-form #damping');
+  // console.log(newDamping.value);
+  damping = newDamping.value;
+} 
+firstOrderForm.addEventListener('submit', HandleFirstOrderForm);
+
+var secondOrderSeeker = document.querySelector('.seeker.second-order');
+var secondOrderTarget = document.querySelector('.draggable.second-order');
+
+SecondOrderSeeker(secondOrderSeeker, secondOrderTarget);
+function SecondOrderSeeker(seeker, target) {
+  var startTime = performance.now();
+  requestAnimationFrame(function() {
+    SecondOrderDynamic(seeker, target, startTime, 0, 0);
+  });
+}
+
+function SecondOrderDynamic(seeker, target, startTime, oldLeft, oldTop) {
+  let elapsedTime = performance.now() - startTime;
+  elapsedTime = elapsedTime / 1000;
+
+    if (Math.abs(seeker.offsetTop - target.offsetTop) < 0.1 && Math.abs(seeker.offsetLeft - target.offsetLeft) < 0.1 )
+    {
+      seeker.style.top = target.offsetTop;
+      seeker.style.left = target.offsetLeft;
+    }
+
+  let top = parseFloat(seeker.style.top);
+  seeker.style.top = Lerp(parseFloat(seeker.style.top), parseFloat(target.style.top), (1 - bounce) * damping * elapsedTime) + "px";
+  seeker.style.top = (((1 + bounce) * parseFloat(seeker.style.top)) - (bounce * oldTop)) + "px";
+  oldTop = top;
+
+  let left = parseFloat(seeker.style.left);
+  seeker.style.left = Lerp(parseFloat(seeker.style.left), parseFloat(target.style.left), (1 - bounce) * damping * elapsedTime) + "px";
+  seeker.style.left = (((1 + bounce) * parseFloat(seeker.style.left)) - (bounce * oldLeft)) + "px";
+  oldLeft = left;
+
+  var width = Math.min(window.innerWidth - 20, 800);
+  var height = width * 3 / 4;
+  seeker.style.top = Math.max(seeker.offsetTop, 0) + "px";
+  seeker.style.top = Math.min(seeker.offsetTop, height - 110) + "px";
+  seeker.style.left = Math.max(seeker.offsetLeft, 0) + "px";
+  seeker.style.left = Math.min(seeker.offsetLeft, width - 110) + "px";
+
+  startTime = performance.now();
+  requestAnimationFrame(function() {
+    SecondOrderDynamic(seeker, target, startTime, oldLeft, oldTop);
+  });
+}
+
+// Prevent form from refreshing page
+var secondOrderForm = document.querySelector("#second-order-form");
+
+function HandleSecondOrderForm(event) { 
+  event.preventDefault();
+  
+  let newDamping = document.querySelector('#second-order-form #damping');
+  let newBounce = document.querySelector('#second-order-form #bounce');
+  
+  // console.log(newDamping.value);
+  // console.log(damping);
+  damping = newDamping.value;
+  bounce = parseFloat(newBounce.value);
+  // console.log(damping);
+}
+secondOrderForm.addEventListener('submit', HandleSecondOrderForm);

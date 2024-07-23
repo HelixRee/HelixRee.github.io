@@ -59,7 +59,7 @@ body {
     margin: 0px;
     padding: 0px;
 
-    height: 200vh;
+    min-height: 100vh;
     overflow-x: hidden; /* Hide horizontal scollbar */
 }
 
@@ -146,7 +146,12 @@ body {
     top: 0px;
     left: 0px;
 
+    width: 226px;
+    height: 138px;
     z-index: 102;
+    transform-origin: 0 0;
+    transform: scale(1,1);
+    transition: transform 1s cubic-bezier(.09,1.13,.41,1);
 }
 
 .page-top {
@@ -491,13 +496,13 @@ header > .color-strip {
     border-radius: calc(75px / 2);
     margin: 10px;
     margin-bottom: 0px;
-    box-shadow: 2px 2px black, 4px 4px 4px black;
+    box-shadow: 2px 2px black, 4px 4px 4px black, 0px -25px var(--background-color);
 
     display: grid;
     grid-template-columns: 75px 1fr 75px;
 
     border: 2px outset white;
-    box-shadow: 4px 4px black;
+    /* box-shadow: 4px 4px black; */
     /* display: flex; */
     text-align: center;
 
@@ -568,6 +573,10 @@ header > .color-strip {
     flex-basis: 40px;
 }
 
+#page4 {
+    flex-basis: 40px;
+}
+
 .page-selector:active {
     transform: scale(0.9,0.9);
 }
@@ -575,6 +584,8 @@ header > .color-strip {
 .content {
     position: relative;
     box-shadow: 0px -10px var(--background-color);
+    overflow: hidden;
+    z-index: 0;
 }
 
 .page-content {
@@ -594,6 +605,7 @@ header > .color-strip {
     color: black;
     border-radius: 0px 0px calc(55px / 2) calc(55px / 2);
     width: calc(100% - 110px);
+    min-height: 50vh;
 
     border: 4px outset black;
 
@@ -604,12 +616,12 @@ header > .color-strip {
     transition: transform 1s;
 }
 
-.page-content > p {
+.page-content p {
     color: black;
 
     margin: 10px;
-    font-size: 20px;
-    text-align: left;
+    font-size: 18px;
+    /* text-align: left; */
 
 }
 
@@ -624,6 +636,25 @@ header > .color-strip {
     text-decoration-color: #1b1b1b;
 }
 
+.page-content img {
+    /* height: calc(100% - 20px);
+    width: calc(100% - 20px); */
+    width: calc(100% - 20px);
+    max-width: 800px;
+    height: auto;
+    margin: 10px;
+    object-fit: contain;
+    /* max-width: 800px; */
+
+    border-radius: 10px;
+    border: 4px white inset;
+    
+}
+
+/* .page-content a {
+    float: right;
+} */
+
 .page-content .underline-overlay {
     position: absolute;
 }
@@ -632,6 +663,153 @@ header > .color-strip {
     position: relative;
     display: block;
     transform: translate(-50%, 0%);
+    /* transform: none; */
+    
     z-index: -5;
 }
+
+.footer {
+    min-height: 50px;
+    width: 100%;
+
+    background-color: var(--light-grey);
+}
+
+.expanded {
+    transform: scale(20,20);
+}
+
+@media only screen and (max-width: 800px) {
+    .content-navbar{
+        display: none;
+    }   
+    .page-content {
+        margin: 0px;
+        border-radius: 0px 0px 0px 0px;
+        width: 100%;
+        border: none;
+    }
+
+}
+
+.nav-options {
+    z-index: 120;
+    display: none;
+    width: 100vw;
+}
+.nav-option {
+    z-index: 120;
+    text-align: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--light-grey);
+    border-radius: 20px;
+    border: 2px white outset;
+    box-shadow: 2px 2px 2px white;
+    text-shadow:
+        0.33vmin 0.33vmin black, -0.16vmin -0.16vmin black,
+        0.25vmin -0.25vmin black, -0.25vmin 0.25vmin black,
+        -0.16vmin 0.42vmin var(--purple), -0.08vmin 0.5vmin var(--purple),
+        0vmin 0.58vmin var(--purple), 0.08vmin 0.67vmin var(--purple),
+        0.42vmin -0.16vmin var(--purple), 0.5vmin -0.08vmin var(--purple),
+        0.58vmin 0vmin var(--purple), 0.67vmin 0.08vmin var(--purple),
+        0.16vmin 0.67vmin var(--purple), 0.67vmin 0.16vmin var(--purple),
+        0.25vmin 0.67vmin var(--purple), 0.67vmin 0.25vmin var(--purple),
+        0.33vmin 0.67vmin var(--purple), 0.67vmin 0.33vmin var(--purple),
+        0.42vmin 0.67vmin var(--purple), 0.67vmin 0.42vmin var(--purple),
+        0.5vmin 0.67vmin var(--purple), 0.67vmin 0.5vmin var(--purple),
+        0.58vmin 0.67vmin var(--purple), 0.67vmin 0.58vmin var(--purple),
+        0.67vmin 0.67vmin var(--purple),
+        0.25vmin 0.75vmin var(--lime), 0.42vmin 0.83vmin var(--lime),
+        0.58vmin 0.92vmin var(--lime), 0.75vmin 1.16vmin var(--lime),
+        0.75vmin 0.25vmin var(--lime), 0.83vmin 0.42vmin var(--lime),
+        0.92vmin 0.58vmin var(--lime), 1vmin 0.75vmin var(--lime),
+        0.92vmin 1vmin var(--lime), 1vmin 0.92vmin var(--lime),
+        1vmin 1vmin var(--lime);
+    cursor: pointer;
+}
+.shown {
+    display: block;
+}
+.page-content .draggable-container {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 20px);
+    max-width: 800px;
+    aspect-ratio: 4 / 3;
+    height: auto;
+    /* margin: 10px; */
+    border-radius: 10px;
+    border: 4px rgb(203, 203, 203) inset;
+    background-color: var(--background-color);
+}
+.page-content .draggable {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgba(203, 203, 203, 0.75);
+    border: 4px var(--background-color) outset;
+    border-radius: 50%;
+    /* Attempted fix */
+    z-index: 10;
+}
+.page-content .draggable p {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0px;
+    color: white;
+    text-shadow:
+    0.33vmin 0.33vmin black, -0.16vmin -0.16vmin black,
+    0.25vmin -0.25vmin black, -0.25vmin 0.25vmin black,
+    -0.16vmin 0.42vmin var(--purple), -0.08vmin 0.5vmin var(--purple),
+    0vmin 0.58vmin var(--purple), 0.08vmin 0.67vmin var(--purple),
+    0.42vmin -0.16vmin var(--purple), 0.5vmin -0.08vmin var(--purple),
+    0.58vmin 0vmin var(--purple), 0.67vmin 0.08vmin var(--purple),
+    0.16vmin 0.67vmin var(--purple), 0.67vmin 0.16vmin var(--purple),
+    0.25vmin 0.67vmin var(--purple), 0.67vmin 0.25vmin var(--purple),
+    0.33vmin 0.67vmin var(--purple), 0.67vmin 0.33vmin var(--purple),
+    0.42vmin 0.67vmin var(--purple), 0.67vmin 0.42vmin var(--purple),
+    0.5vmin 0.67vmin var(--purple), 0.67vmin 0.5vmin var(--purple),
+    0.58vmin 0.67vmin var(--purple), 0.67vmin 0.58vmin var(--purple),
+    0.67vmin 0.67vmin var(--purple),
+    0.25vmin 0.75vmin var(--lime), 0.42vmin 0.83vmin var(--lime),
+    0.58vmin 0.92vmin var(--lime), 0.75vmin 1.16vmin var(--lime),
+    0.75vmin 0.25vmin var(--lime), 0.83vmin 0.42vmin var(--lime),
+    0.92vmin 0.58vmin var(--lime), 1vmin 0.75vmin var(--lime),
+    0.92vmin 1vmin var(--lime), 1vmin 0.92vmin var(--lime),
+    1vmin 1vmin var(--lime);
+}
+.seeker {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(234, 255, 61);
+    border: 4px var(--background-color) outset;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+  input {
+    user-select: all;
+    color: black;
+  }
+
+  form {
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    background-color: var(--grey);
+    padding-bottom: 10px;
+    border: 4px rgb(203, 203, 203) outset;
+    border-radius: 0px 0px 100% 100%;
+  }
+
+  .input-field {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 
